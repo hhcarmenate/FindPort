@@ -1,7 +1,7 @@
 {
   "name": "findport",
   "version": "1.0.0",
-  "description": "Find an available pot",
+  "description": "Find an available port",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
