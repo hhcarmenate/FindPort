@@ -34,58 +34,7 @@ npm install
 
 ## Usage
 
-To use the `findAvailablePort` function and start an HTTP server, you need to follow these steps:
-
-1. Create a file named `FindPort.js` with the following content:
-
-```javascript
-const net = require('node:net');
-
-function findAvailablePort(desiredPort) { 
-    return new Promise((resolve, reject) => {
-        const server = net.createServer();
-
-        server.listen(desiredPort, () => { 
-            const { port } = server.address();
-            server.close(() => { 
-                resolve(port);
-            });
-        });
-
-        server.on('error', (err) => { 
-            if (err.code === 'EADDRINUSE') {
-                findAvailablePort(0).then(port => resolve(port));
-            } else { 
-                reject(err);
-            });
-        });
-    });
-}
-
-module.exports = { findAvailablePort };
-```
-
-2. Create a file named `http.js` with the following content:
-
-```javascript
-const http = require('node:http');
-const { findAvailablePort } = require('./FindPort.js');
-
-const server = http.createServer((req, res) => { 
-    console.log('request received');
-    res.end('Hello World');
-});
-
-findAvailablePort(3000).then(port => { 
-    server.listen(port, () => { 
-        console.log(`Server is running on port http://localhost:${port}`);
-    });
-}).catch(err => {
-    console.error('Failed to find an available port:', err);
-});
-```
-
-3. Run the HTTP server:
+1. Run the HTTP server:
 
 ```sh
 node http.js
